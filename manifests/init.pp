@@ -3,7 +3,6 @@
 # Manage /etc/hosts
 #
 class hosts (
-  $collect_all           = false,
   $enable_ipv4_localhost = true,
   $enable_ipv6_localhost = true,
   $enable_fqdn_entry     = true,
@@ -16,13 +15,6 @@ class hosts (
   $host_entries          = undef,
 ) {
 
-
-  # validate type and convert string to boolean if necessary
-  if is_string($collect_all) {
-    $collect_all_real = str2bool($collect_all)
-  } else {
-    $collect_all_real = $collect_all
-  }
 
   # validate type and convert string to boolean if necessary
   if is_string($enable_ipv4_localhost) {
@@ -113,12 +105,10 @@ class hosts (
     ip           => $localhost6_ip,
   }
 
-  if $use_fqdn_real == true {
-    host { $::fqdn:
-      ensure       => $fqdn_ensure,
-      host_aliases => $my_fqdn_host_aliases,
-      ip           => $fqdn_ip,
-    }
+  host { $::fqdn:
+    ensure       => $fqdn_ensure,
+    host_aliases => $my_fqdn_host_aliases,
+    ip           => $fqdn_ip,
   }
 
   resources { 'host':
