@@ -9,8 +9,8 @@ class hosts (
   $enable_fqdn_entry     = true,
   $use_fqdn              = true,
   $fqdn_host_aliases     = $::hostname,
-  $localhost_aliases     = []
-  $localhost6_aliases    = ['ip6-loopback']
+  $localhost_aliases     = [],
+  $localhost6_aliases    = ['ip6-loopback'],
   $purge_hosts           = false,
   $target                = '/etc/hosts',
   $host_entries          = undef,
