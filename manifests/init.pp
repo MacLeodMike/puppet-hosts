@@ -4,7 +4,7 @@ class hosts (
   $ipv6_localhost_ensure = $hosts::params::ipv6_localhost_ensure,
   $fqdn_entry_ensure = $hosts::params::fqdn_entry_ensure,
   $ipv4_localhost = $hosts::params::ipv4_localhost,
-  $ipv6_localhost = $hosts:params::ipv6_localhost,
+  $ipv6_localhost = $hosts::params::ipv6_localhost,
   $fqdn_entry = $hosts::params::fqdn_entry,
   $ipv4_localhost_aliases = $hosts::params::ipv4_localhost_aliases,
   $ipv6_localhost_aliases = $hosts::params::ipv6_localhost_aliases,
