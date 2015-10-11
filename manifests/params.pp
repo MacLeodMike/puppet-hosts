@@ -8,7 +8,7 @@ class hosts::params {
   $localhost             = 'localhost'
   $localhost6            = 'ip6-localhost'
   $fqdn                  = ''
-  $localhost_aliases     = ['localhost']
+  $localhost_aliases     = []
   $localhost6_aliases    = ['ip6-loopback']
   $fqdn_host_aliases     = ['$::hostname']
   $purge_hosts           = false

@@ -1,12 +1,6 @@
 #
 class hosts::config inherits hosts {
 
-  Host {
-    hosts_file => $hosts_file,
-  }
-
-  $host_entries = undef
-
   if $ipv4_localhost_enabled == true {
     $localhost_ensure     = 'present'
     $localhost_ip         = '127.0.0.1'
@@ -61,16 +55,6 @@ class hosts::config inherits hosts {
       host_aliases => $my_fqdn_host_aliases,
       ip           => $fqdn_ip,
     }
-  }
-
-  resources { 'host':
-    purge => $purge_hosts,
-  }
-
-  if $host_entries != undef {
-    $host_entries_real = delete($host_entries,$::fqdn)
-    validate_hash($host_entries_real)
-    create_resources(host,$host_entries_real)
   }
 
 }
