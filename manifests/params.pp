@@ -10,6 +10,6 @@ class hosts::params {
   $ipv4_localhost_aliases = []
   $ipv6_localhost_aliases = ['ip6-loopback']
   $fqdn_entry_aliases     = ['$::hostname']
-  $hosts_entries          = {}
+  $hosts_entries          = undef
 
 }

@@ -22,7 +22,6 @@ class hosts (
   validate_array($ipv4_localhost_aliases)
   validate_array($ipv6_localhost_aliases)
   validate_array($fqdn_entry_aliases)
-  validate_hash($hosts_entries)
 
   anchor { 'hosts::begin': } ->
   class { '::hosts::config': } ->
