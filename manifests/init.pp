@@ -1,123 +1,24 @@
-# == Class: hosts
-#
-# Manage /etc/hosts
-#
 class hosts (
-  $enable_ipv4_localhost = true,
-  $enable_ipv6_localhost = true,
-  $enable_fqdn_entry     = true,
-  $use_fqdn              = true,
-  $fqdn_host_aliases     = $::hostname,
-  $localhost_aliases     = [],
-  $localhost6_aliases    = ['ip6-loopback'],
-  $purge_hosts           = false,
-  $target                = '/etc/hosts',
-  $host_entries          = undef,
-) {
 
+  $fqdn_host_aliases = $hosts::params::fqdn_host_aliases,
 
-  # validate type and convert string to boolean if necessary
-  if is_string($enable_ipv4_localhost) {
-    $ipv4_localhost_enabled = str2bool($enable_ipv4_localhost)
-  } else {
-    $ipv4_localhost_enabled = $enable_ipv4_localhost
-  }
+) inherits puppet::params {
 
-  # validate type and convert string to boolean if necessary
-  if is_string($enable_ipv6_localhost) {
-    $ipv6_localhost_enabled = str2bool($enable_ipv6_localhost)
-  } else {
-    $ipv6_localhost_enabled = $enable_ipv6_localhost
-  }
+  validate_boolean($enable_ipv4_localhost)
+  validate_boolean($enable_ipv6_localhost)
+  validate_boolean($enable_fqdn_entry)
+  validate_boolean($use_fqdn)
+  validate_string($localhost)
+  validate_string($localhost6)
+  validate_string($fqdn)
+  validate_array($localhost_aliases)
+  validate_array($localhost6_aliases)
+  validate_array($fqdn_host_aliases)
+  validate_boolean($purge_hosts)
+  validate_string($hosts_file)
 
-  # validate type and convert string to boolean if necessary
-  if is_string($enable_fqdn_entry) {
-    $fqdn_entry_enabled = str2bool($enable_fqdn_entry)
-  } else {
-    $fqdn_entry_enabled = $enable_fqdn_entry
-  }
+  anchor { 'puppet::begin': } ->
+  class { '::puppet::config': } ->
+  anchor { 'puppet::end': }
 
-  # validate type and convert string to boolean if necessary
-  if is_string($use_fqdn) {
-    $use_fqdn_real = str2bool($use_fqdn)
-  } else {
-    $use_fqdn_real = $use_fqdn
-  }
-
-  # validate type and convert string to boolean if necessary
-  if is_string($purge_hosts) {
-    $purge_hosts_enabled = str2bool($purge_hosts)
-  } else {
-    $purge_hosts_enabled = $purge_hosts
-  }
-
-  if $ipv4_localhost_enabled == true {
-    $localhost_ensure     = 'present'
-    $localhost_ip         = '127.0.0.1'
-    $my_localhost_aliases = $localhost_aliases
-  } else {
-    $localhost_ensure     = 'absent'
-    $localhost_ip         = '127.0.0.1'
-    $my_localhost_aliases = undef
-  }
-
-  if $ipv6_localhost_enabled == true {
-    $localhost6_ensure     = 'present'
-    $localhost6_ip         = '::1'
-    $my_localhost6_aliases = $localhost6_aliases
-  } else {
-    $localhost6_ensure     = 'absent'
-    $localhost6_ip         = '::1'
-    $my_localhost6_aliases = undef
-  }
-
-  if !is_string($my_localhost_aliases) and !is_array($my_localhost_aliases) {
-    fail('hosts::localhost_aliases must be a string or an array.')
-  }
-
-  if !is_string($my_localhost6_aliases) and !is_array($my_localhost6_aliases) {
-    fail('hosts::localhost6_aliases must be a string or an array.')
-  }
-
-  if $fqdn_entry_enabled == true {
-    $fqdn_ensure          = 'present'
-    $my_fqdn_host_aliases = $fqdn_host_aliases
-    $fqdn_ip              = $::ipaddress
-  } else {
-    $fqdn_ensure          = 'absent'
-    $my_fqdn_host_aliases = []
-    $fqdn_ip              = $::ipaddress
-  }
-
-  Host {
-    target => $target,
-  }
-
-  host { 'localhost':
-    ensure       => $localhost_ensure,
-    host_aliases => $my_localhost_aliases,
-    ip           => $localhost_ip,
-  }
-
-  host { 'ip6-localhost':
-    ensure       => $localhost6_ensure,
-    host_aliases => $my_localhost6_aliases,
-    ip           => $localhost6_ip,
-  }
-
-  host { $::fqdn:
-    ensure       => $fqdn_ensure,
-    host_aliases => $my_fqdn_host_aliases,
-    ip           => $fqdn_ip,
-  }
-
-  resources { 'host':
-    purge => $purge_hosts,
-  }
-
-  if $host_entries != undef {
-    $host_entries_real = delete($host_entries,$::fqdn)
-    validate_hash($host_entries_real)
-    create_resources(host,$host_entries_real)
-  }
 }
