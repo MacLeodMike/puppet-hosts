@@ -16,7 +16,7 @@ class hosts::config inherits hosts {
   host { $fqdn_entry:
     ensure       => $fqdn_entry_ensure,
     host_aliases => $fqdn_entry_aliases,
-    ip           => $::ipadress,
+    ip           => $::ipaddress,
   }
 
   if $host_entries != undef {
