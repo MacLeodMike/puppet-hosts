@@ -10,8 +10,6 @@ class hosts::params {
   $fqdn                  = ''
   $localhost_aliases     = []
   $localhost6_aliases    = ['ip6-loopback']
-  $fqdn_host_aliases     = ['$::hostname']
-  $purge_hosts           = false
-  $hosts_file            = '/etc/hosts'
+  $fqdn_aliases          = ['$::hostname']
 
 }
