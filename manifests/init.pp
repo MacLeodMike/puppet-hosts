@@ -9,6 +9,7 @@ class hosts (
   $ipv4_localhost_aliases = $hosts::params::ipv4_localhost_aliases,
   $ipv6_localhost_aliases = $hosts::params::ipv6_localhost_aliases,
   $fqdn_entry_aliases = $hosts::params::fqdn_entry_aliases,
+  $hosts_entries = $hosts::params::hosts_entries,
 
 ) inherits hosts::params {
 
@@ -21,6 +22,7 @@ class hosts (
   validate_array($ipv4_localhost_aliases)
   validate_array($ipv6_localhost_aliases)
   validate_array($fqdn_entry_aliases)
+  validate_hash($hosts_entries)
 
   anchor { 'hosts::begin': } ->
   class { '::hosts::config': } ->

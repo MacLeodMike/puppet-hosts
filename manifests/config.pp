@@ -19,4 +19,6 @@ class hosts::config inherits hosts {
     ip           => $::ipadress,
   }
 
+  create_resources(host,$host_entries)
+
 }
