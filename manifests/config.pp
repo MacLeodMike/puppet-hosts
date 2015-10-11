@@ -13,7 +13,7 @@ class hosts::config inherits hosts {
     ip           => '::1',
   }
 
-  host { $fqdn_entry:
+  host { $::fqdn:
     ensure       => $fqdn_entry_ensure,
     host_aliases => $fqdn_entry_aliases,
     ip           => $::ipadress,
