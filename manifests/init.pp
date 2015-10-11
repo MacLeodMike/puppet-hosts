@@ -1,28 +1,26 @@
 class hosts (
 
-  $enable_ipv4_localhost = $hosts::params::enable_ipv4_localhost,
-  $enable_ipv6_localhost = $hosts::params::enable_ipv6_localhost,
-  $enable_fqdn_entry = $hosts::params::enable_fqdn_entry,
-  $use_fqdn = $hosts::params::use_fqdn,
-  $localhost = $hosts::params::localhost,
-  $localhost6 = $hosts::params::localhost6,
-  $fqdn = $hosts::params::fqdn,
-  $localhost_aliases = $hosts::params::localhost_aliases,
-  $localhost6_aliases = $hosts::params::localhost6_aliases,
-  $fqdn_aliases = $hosts::params::fqdn_aliases,
+  $ipv4_localhost_ensure = $hosts::params::ipv4_localhost_ensure,
+  $ipv6_localhost_ensure = $hosts::params::ipv6_localhost_ensure,
+  $fqdn_entry_ensure = $hosts::params::fqdn_entry_ensure,
+  $ipv4_localhost = $hosts::params::ipv4_localhost,
+  $ipv6_localhost = $hosts:params::ipv6_localhost,
+  $fqdn_entry = $hosts::params::fqdn_entry,
+  $ipv4_localhost_aliases = $hosts::params::ipv4_localhost_aliases,
+  $ipv6_localhost_aliases = $hosts::params::ipv6_localhost_aliases,
+  $fqdn_entry_aliases = $hosts::params::fqdn_entry_aliases,
 
 ) inherits hosts::params {
 
-  validate_bool($enable_ipv4_localhost)
-  validate_bool($enable_ipv6_localhost)
-  validate_bool($enable_fqdn_entry)
-  validate_bool($use_fqdn)
-  validate_string($localhost)
-  validate_string($localhost6)
-  validate_string($fqdn)
-  validate_array($localhost_aliases)
-  validate_array($localhost6_aliases)
-  validate_array($fqdn_aliases)
+  validate_string($ipv4_localhost_ensure)
+  validate_string($ipv6_localhost_ensure)
+  validate_string($fqdn_entry_ensure)
+  validate_string($ipv4_localhost)
+  validate_string($ipv6_localhost)
+  validate_string($fqdn_entry)
+  validate_array($ipv4_localhost_aliases)
+  validate_array($ipv6_localhost_aliases)
+  validate_array($fqdn_entry_aliases)
 
   anchor { 'hosts::begin': } ->
   class { '::hosts::config': } ->

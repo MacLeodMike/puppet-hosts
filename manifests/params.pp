@@ -1,15 +1,14 @@
 #
 class hosts::params {
 
-  $enable_ipv4_localhost = true
-  $enable_ipv6_localhost = true
-  $enable_fqdn_entry     = true
-  $use_fqdn              = true
-  $localhost             = 'localhost'
-  $localhost6            = 'ip6-localhost'
-  $fqdn                  = ''
-  $localhost_aliases     = []
-  $localhost6_aliases    = ['ip6-loopback']
-  $fqdn_aliases          = ['$::hostname']
+  $ipv4_localhost_ensure  = 'present'
+  $ipv6_localhost_ensure  = 'present'
+  $fqdn_entry_ensure      = 'present'
+  $ipv4_localhost         = 'localhost'
+  $ipv6_localhost         = 'ip6-localhost'
+  $fqdn_entry             = '$::fqdn'
+  $ipv4_localhost_aliases = []
+  $ipv6_localhost_aliases = ['ip6-loopback']
+  $fqdn_entry_aliases     = ['$::hostname']
 
 }
