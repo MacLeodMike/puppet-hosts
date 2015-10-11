@@ -24,8 +24,8 @@ class hosts (
   validate_array($localhost6_aliases)
   validate_array($fqdn_aliases)
 
-  anchor { 'puppet::begin': } ->
-  class { '::puppet::config': } ->
-  anchor { 'puppet::end': }
+  anchor { 'hosts::begin': } ->
+  class { '::hosts::config': } ->
+  anchor { 'hosts::end': }
 
 }
