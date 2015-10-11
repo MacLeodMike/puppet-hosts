@@ -2,7 +2,7 @@ class hosts (
 
   $fqdn_host_aliases = $hosts::params::fqdn_host_aliases,
 
-) inherits puppet::params {
+) inherits hosts::params {
 
   validate_boolean($enable_ipv4_localhost)
   validate_boolean($enable_ipv6_localhost)
